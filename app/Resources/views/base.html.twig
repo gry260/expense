@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MySummer Home</title>
+    <script src="https://code.jquery.com/jquery-2.0.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-header">
+        <div id="myTabs"><!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                          data-toggle="tab">Home</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                           data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a>
+                </li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="content-wrapper" style="min-height: 378px;">
+        <div class="tab-content">
+
+            <br />
+            <div role="tabpanel" class="tab-pane in active" id="home">
+                <form method="post" action="create">
+                <div class="col-md-2">
+                    <select class="form-control input-sm" name="expenseId">
+                        {% for en in entity %}
+                            <option value="{{ en.id }}">{{ en.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="name" class="form-control input-sm" size="5" />
+                </div>
+                <div class="col-md-2">
+                    <input type="hidden" name="user_id" value="3"/>
+                    <input type="submit" class="btn btn-primary btn-sm" value="Submit"/>
+                </div>
+                </form>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="profile">eee</div>
+            <div role="tabpanel" class="tab-pane faee" id="messages">kkk</div>
+            <div role="tabpanel" class="tab-pane fade" id="settings">ll</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
