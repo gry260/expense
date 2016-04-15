@@ -27,27 +27,33 @@
     </header>
     <div class="content-wrapper" style="min-height: 378px;">
         <div class="tab-content">
-
-            <br />
+            <br/>
             <div role="tabpanel" class="tab-pane in active" id="home">
-                <form method="post" action="create">
-                <div class="col-md-2">
-                    <select class="form-control input-sm" name="expenseId">
-                        {% for en in entity %}
-                            <option value="{{ en.id }}">{{ en.name }}</option>
-                        {% endfor %}
-                    </select>
+                <div class="col-md-6">
+                    <div class="list-group list-group-root well">
+                        <a href="#" class="list-group-item">Item 1</a>
+                        <div class="list-group">
+                            <a class="list-group-item">Item 1.1</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input type="text" name="name" class="form-control input-sm" size="5" />
+                <div class="col-md-6">
+                    {{ form_start(form, {'action': 'create', 'method': 'POST'}) }}
+                    {{ form_errors(form) }}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form_row(form.name) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ form_row(form.submit) }}
+                        </div>
+                    </div>
+                    {{ form_row(form.user_id) }}
+                    {{ form_end(form) }}
                 </div>
-                <div class="col-md-2">
-                    <input type="hidden" name="user_id" value="3"/>
-                    <input type="submit" class="btn btn-primary btn-sm" value="Submit"/>
-                </div>
-                </form>
             </div>
-
             <div role="tabpanel" class="tab-pane fade" id="profile">eee</div>
             <div role="tabpanel" class="tab-pane faee" id="messages">kkk</div>
             <div role="tabpanel" class="tab-pane fade" id="settings">ll</div>

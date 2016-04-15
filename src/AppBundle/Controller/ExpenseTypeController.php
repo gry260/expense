@@ -9,8 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\ExpenseType;
 use AppBundle\Entity\ExpenseSubCategory;
 use AppBundle\Entity\ExpenseUser;
+use AppBundle\Entity\ExpenseUsers;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ExpenseTypeController extends Controller
 {
@@ -20,10 +23,16 @@ class ExpenseTypeController extends Controller
    */
   public function indexAction()
   {
-    $em = $this->getDoctrine()->getManager();
-    $entities = $em->getRepository('AppBundle:ExpenseType')->findAll();
-    return array("entity"=>$entities);
+    $ex = new ExpenseUsers();
+    $form = $this->createFormBuilder($ex)
+      ->add('user_id', HiddenType::class, array("attr"=>array("value"=>"5")))
+      ->add('name', TextType::class, array('label'=>"New Category Name", 'required'=>true, 'attr'=>array('class'=>'form-control')))
+      ->add('submit', SubmitType::class, array('label'=>'Add a New Category', 'attr'=>array('class'=>'btn btn-sm btn-primary')))
+      ->getForm();
 
+    $em = $this->getDoctrine()->getManager();
+    $entities = $em->getRepository('AppBundle:ExpenseUsers')->findByUser_Id(5);
+    return array("entity"=>$entities, 'form'=>$form->createView());
   }
 
 
@@ -33,26 +42,31 @@ class ExpenseTypeController extends Controller
    */
   public function createAction(Request $request)
   {
-    $category = new ExpenseUser();
-    $form = $this->createFormBuilder($category)
-      ->add('expenseId', IntegerType::class)
-      ->add('user_id', IntegerType::class)
-      ->add('name', TextType::class)
+    $ex = new ExpenseUsers();
+    $form = $this->createFormBuilder($ex)
+      ->add('user_id', HiddenType::class)
+      ->add('name', TextType::class, array('label'=>"New Category Name", 'required'=>true, 'attr'=>array('class'=>'form-control')))
+      ->add('submit', SubmitType::class, array('label'=>'Add a New Category', 'attr'=>array('class'=>'btn btn-sm btn-primary')))
       ->getForm();
 
-    echo '<pre>';
-    print_r($request);
-    echo '</pre>';
-
-    exit;
-
     $form->handleRequest($request);
-    if(!$form->isValid()){
+    if($form->isSubmitted() && $form->isValid()) {
       $em = $this->getDoctrine()->getManager();
-      $em->persist($category);
+      $em->persist($ex);
       $em->flush();
     }
+    else{
+      echo "asdf";
+    }
+
+    exit;
     return $this->redirect('./');
+
+  }
+
+
+  private function checkConstraints()
+  {
 
   }
 }
